@@ -1,0 +1,44 @@
+/* structure for a node
+class Node {
+ public:
+  int data;
+  Node *next;
+
+  Node(int x){
+      data = x;
+      next = NULL;
+  }
+}; */
+
+class Solution {
+public:
+    Node* sortedInsert(Node* head, int data) {
+        Node* newNode = new Node(data);
+
+        // Case 1: Empty list
+        if (head == nullptr) {
+            return newNode;
+        }
+
+        Node* current = head;
+
+        // Case 2: Insert before head (if new data is smaller)
+        if (data < head->data) {
+            while (current->next != head) {
+                current = current->next;
+            }
+            current->next = newNode;
+            newNode->next = head;
+            return newNode;  // new head
+        }
+
+        // Case 3: Insert somewhere after head
+        while (current->next != head && current->next->data < data) {
+            current = current->next;
+        }
+
+        newNode->next = current->next;
+        current->next = newNode;
+        return head;
+    }
+};
